@@ -77,8 +77,8 @@ function Start (){
 }
  
 function Update () {
-        if(!talking){
-       
+		transform.position.z = 0; //Forzare la posizione Z
+        if(!talking){       
                 getState();
                 //PlaySound();
                
@@ -174,7 +174,7 @@ function getState(){
        
      
 		//PC Comandi
-		if(Input.GetButton("Jump")){
+		if(Input.GetButtonDown("Jump")){
 				
 				if(controller.isGrounded){
 				walk = false;

@@ -104,6 +104,7 @@ function Attack_Walk2(){
 }
 
 function Attack_Fly(){
+	var anim = transform.GetComponent(aniSprite);
 	moveDirection = (player.position-transform.position);
 	moveDirection.x *= -1;
 	moveDirection.Normalize();
@@ -111,6 +112,9 @@ function Attack_Fly(){
 	moveDirection = transform.TransformDirection(moveDirection);
 	moveDirection *= flySpeed;
 	controller.Move(moveDirection * Time.deltaTime);
+	if(moveDirection.x>0 || moveDirection.x<0){
+		anim.aniSprite(3,1,0,0,3,7);
+	}
 	if(realDistance <= distanceAttack){
 		//Animazione attacco + istanziazione oggetto usato per l'attacco
 		if(realDistance < recoveryDistance){

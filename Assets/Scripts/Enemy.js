@@ -20,9 +20,13 @@ private var moveDirection : Vector3 = Vector3.zero;
 private var gravity : Vector3 = Vector3.zero;
 private var controller : CharacterController;
 
+var delay : float = 3;
+var bullet : Transform;
+var shooting : boolean = false;
+
 var enemyDie : Transform;
 
-enum EnemyType {Walking, Walking2, Flying}
+enum EnemyType {Walking, Walking2, Flying, FireHead}
 
 var Type : EnemyType;
 
@@ -33,19 +37,27 @@ function Start () {
 }
 
 function Update () {
+	
+	realDistance = Vector3.Distance(this.transform.position, player.transform.position);
+	
 	if(!isDeath){
-		switch(Type){
-			case EnemyType.Walking:
-				Attack_Walk();
-			break;
-			case EnemyType.Walking2:
-				Attack_Walk2();
-			break;			
-			case EnemyType.Flying:
-				Attack_Fly();
-			break;
-		}
-		
+		if(realDistance <= detectionDistance)
+			switch(Type){
+				case EnemyType.Walking:
+					Attack_Walk();
+				break;
+				case EnemyType.Walking2:
+					Attack_Walk2();
+				break;			
+				case EnemyType.Flying:
+					Attack_Fly();
+				break;
+				case EnemyType.FireHead:
+					transform.collider.enabled = false;
+					if(!shooting)
+						Attack_Head();
+				break;
+			}
 	}else {
 		Instantiate(enemyDie, transform.position, transform.rotation);
 		Destroy(this.gameObject);
@@ -123,6 +135,13 @@ function Attack_Fly(){
 		controller.Move(moveDirection*-1 * Time.deltaTime);
 		}
 	}
+}
+
+function Attack_Head(){
+	shooting = true;
+	Instantiate(bullet, transform.position-Vector3(0,0,2), transform.rotation);
+	yield WaitForSeconds(delay);
+	shooting = false;
 }
 
 function OnControllerColliderHit(hit : ControllerColliderHit){

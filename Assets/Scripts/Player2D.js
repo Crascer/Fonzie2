@@ -39,16 +39,16 @@ var inFlight : boolean;
 var hit : boolean = false;
 
 //Power Booleans
-var isRocketBall : boolean;
-var isAvalanche : boolean;
+var isVinyl : boolean;
+var isBazooka : boolean;
 private var canShoot : boolean = true;
  
 //Power Bullets
-var rocketSockR : Transform;
-var rocketSockL : Transform;
-var rocketBullet : Transform;
-var avalancheSocket : Transform;
-var avalancheBullet: Transform;
+var vinylSockR : Transform;
+var vinylSockL : Transform;
+var vinylBullet : Transform;
+var bazookaSocket : Transform;
+var bazookaBullet: Transform;
  
 //Power Setup
 var shootSpeed : float = 1.0;
@@ -198,23 +198,23 @@ function getState(){
 					aim = Vector3(lastDir*-1, Input.GetAxis("Vertical"),0);
 			}
 			if(aim.x>0){
-				var bul : Transform = Instantiate(rocketBullet, rocketSockR.position, rocketSockR.rotation);
+				var bul : Transform = Instantiate(vinylBullet, vinylSockR.position, vinylSockR.rotation);
 				bul.GetComponent(Vinyl).move = aim;
 				InvokeRepeating("ShootTime", 0, 0.5);
 			}
 			if(aim.x<0){
-				var bul2 : Transform = Instantiate (rocketBullet, rocketSockL.position, rocketSockL.rotation);
+				var bul2 : Transform = Instantiate (vinylBullet, vinylSockL.position, vinylSockL.rotation);
 				bul2.GetComponent(Vinyl).move = aim;
 				InvokeRepeating("ShootTime", 0, 0.5);
 			}
 			//guiUpdate = true;
 		}
 				
-		if(Input.GetAxis("Fire2") && isAvalanche && canShoot){
+		if(Input.GetAxis("Fire2") && isBazooka && canShoot){
 			if(ammo>0){
 				canShoot = false;
 				ammo--;
-				Instantiate (avalancheBullet, avalancheSocket.position, avalancheSocket.rotation);
+				Instantiate (bazookaBullet, bazookaSocket.position, bazookaSocket.rotation);
 				InvokeRepeating("ShootTime", 0, 0.5);
 				}
 			guiUpdate = true;
